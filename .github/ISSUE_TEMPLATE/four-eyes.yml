@@ -1,0 +1,31 @@
+name: A change
+description: Say what should change and why. The factory takes it from there and comes back with questions.
+labels: [autopilot]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What should change
+      description: In your own words, as you would tell a colleague. No technical terms needed.
+      placeholder: Traders want to change the size of a working order without canceling it.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: Who needs it and what goes wrong today. This is what the factory checks the result against.
+      placeholder: Canceling loses their place in the queue, and they do it ten times a day.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: An example (optional)
+      description: One concrete case with numbers, if you have one. It often becomes the first test.
+      placeholder: An order for 10, 4 filled. Changed to 12, it should still need 8.
+  - type: markdown
+    attributes:
+      value: |
+        Where you leave something open, the factory makes an assumption and shows it on the pull request.
+        You change any of them with one line, for example `/decide A3 reject it`.

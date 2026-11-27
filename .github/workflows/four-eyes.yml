@@ -1,0 +1,31 @@
+# Four Eyes on this repo: the gate on every pull request, the autopilot from an issue labeled `autopilot`,
+# and `/decide` on a pull request. The workflows themselves live in the factory repo, pinned to a version.
+name: four-eyes
+
+on:
+  pull_request: { types: [opened, synchronize, reopened, edited] }   # edited: a spec added later reruns the gate
+  issues: { types: [labeled] }
+  issue_comment: { types: [created] }
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write   # Anthropic's code-review action in the gate
+
+jobs:
+  gate:
+    if: github.event_name == 'pull_request'
+    uses: Juicyscoop88/four-eyes/.github/workflows/gate.yml@v0.3.13
+    with: { setup: "uv sync" }
+    secrets: inherit   # ANTHROPIC_API_KEY for the reviewer
+  autopilot:
+    if: github.event_name == 'issues'
+    uses: Juicyscoop88/four-eyes/.github/workflows/autopilot.yml@v0.3.13
+    with: { setup: "uv sync" }
+    secrets: inherit
+  decide:
+    if: github.event_name == 'issue_comment'
+    uses: Juicyscoop88/four-eyes/.github/workflows/decide.yml@v0.3.13
+    with: { setup: "uv sync" }
+    secrets: inherit

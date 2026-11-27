@@ -1,0 +1,8 @@
+# Adopted tool: engineering (adopters) approves the rules and the money part, the business owner the
+# tests that must never break.
+*                   @Juicyscoop88
+/src/recon.py       @Juicyscoop88
+/factory.yaml       @Juicyscoop88
+/.github/workflows/ @Juicyscoop88
+/.github/CODEOWNERS @Juicyscoop88
+/tests/protected/   @pnovak @Juicyscoop88
