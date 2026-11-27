@@ -1,0 +1,44 @@
+# Four Eyes: the one file per repo. What people own, and how strict the gate is per path.
+# Owned paths are changed only by their owners (CODEOWNERS approval). Agents never edit them.
+
+owned:
+  - factory.yaml
+  - .github/workflows/**          # CI: the gate itself
+  - .github/CODEOWNERS            # who approves
+  - tests/protected/**            # tests people own: no agent changes them
+
+source: src                       # the code the gate protects: stubbed for the tester, mutated by the gate
+test_command: .venv/bin/python -m pytest
+python: .venv/bin/python
+
+
+# How things are done here. The agent gets them when it touches the paths, the reviewer checks them.
+standards:
+  - paths: ["**"]
+    company: basics
+  - paths: ["src/report.py"]
+    company: design-system        # the morning report the ops team opens
+  - paths: ["src/recon.py"]
+    company: money                # compares payout amounts with the bank statement
+
+suites:
+  author: tests
+  tester: tests/blind
+  protected: tests/protected
+
+tiers:
+  money:                          # a wrong match hides a payout that went out wrong
+    paths: ["src/recon.py"]
+    mutation_min: 0.8
+    approver: "@Juicyscoop88"     # the adopters
+  standard:
+    paths: ["src/**"]
+    mutation_min: 0.5
+  low:
+    paths: ["**"]
+    mutation_min: 0.0
+
+agents:
+  author:   { model: sonnet, mcp: [four-eyes] }
+  tester:   { model: sonnet, mcp: [] }
+  reviewer: { model: sonnet, mcp: [] }

@@ -1,0 +1,4 @@
+reference,amount,trader_email
+T-001,100.00,trader.one@test.invalid
+T-002,250.00,trader.two@test.invalid
+T-004,40.00,trader.four@test.invalid
